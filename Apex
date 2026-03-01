@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Apex</h1>
+        
+        <div id="auth-section">
+            <input type="text" id="username" placeholder="Benzersiz Kullanıcı Adı">
+            <input type="password" id="password" placeholder="Şifre (Min. 6 Karakter)">
+            <div class="buttons">
+                <button onclick="kayitOl()">Kayıt Ol</button>
+                <button onclick="girisYap()">Giriş Yap</button>
+            </div>
+        </div>
+
+        <div id="game-section" style="display:none;">
+            <h2>Hoş geldin, <span id="current-user"></span>!</h2>
+            <div class="stats">
+                <p>Bakiye: <strong id="balance">0</strong> Apex</p>
+            </div>
+            <button onclick="apexKazan()">Apex Kazan (+10)</button>
+            <button onclick="verileriBulutaYukle()" style="background-color: #2ea44f;">Verileri Buluta Kaydet</button>
+            <button onclick="cikisYap()">Çıkış Yap</button>
+        </div>
+        
+        <p id="message"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
