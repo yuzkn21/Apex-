@@ -149,4 +149,21 @@ function cikisYap() {
         location.reload();
     }
         }
+            // SADECE GERÇEK OYUNCULAR İÇİN ÖZEL SOHBET
+function mesajGonder() {
+    const msg = document.getElementById('chat-input').value.trim();
+    if(msg) {
+        const chatBox = document.getElementById('messages');
+        const time = new Date().toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
+        
+        // Mesaj Baloncuğu Tasarımı
+        chatBox.innerHTML += `
+            <div style="background: #1e293b; padding: 10px; border-radius: 10px; margin-bottom: 8px; border-left: 4px solid #f1c40f; align-self: flex-start; max-width: 90%;">
+                <small style="color: #f1c40f; font-weight: bold; display: block; margin-bottom: 3px;">${currentUser} <span style="color: #94a3b8; font-weight: normal; font-size: 10px;">• ${time}</span></small>
+                <span style="color: white; font-size: 14px;">${msg}</span>
+            </div>`;
             
+        document.getElementById('chat-input').value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+}
