@@ -1,60 +1,62 @@
-// Kullanıcı verileri (Tarayıcıda saklanır, Replit'te kalıcı olur)
 let users = JSON.parse(localStorage.getItem('apex_users')) || {};
 let currentUser = null;
 
 function kayitOl() {
-    const user = document.getElementById('username').value.trim();
+    const user = document.getElementById('username').value;
     const pass = document.getElementById('password').value;
-    const msg = document.getElementById('message');
-
-    if (!user || !pass) { 
-        msg.innerText = "Lütfen tüm alanları doldurun!"; 
-        return; 
+    if (user.length < 1 || pass.length < 6) {
+        alert("Kullanıcı adı boş olamaz ve şifre en az 6 karakter olmalıdır!");
+        return;
     }
-    if (users[user]) { 
-        msg.innerText = "Bu kullanıcı adı zaten alınmış!"; // Benzersiz isim kuralı
-        return; 
+    if (users[user]) {
+        alert("Bu kullanıcı adı zaten alınmış!");
+        return;
     }
-    if (pass.length < 6) { 
-        msg.innerText = "Şifre en az 6 karakter olmalıdır!"; // 6 karakter kuralı
-        return; 
-    }
-
-    // Yeni kullanıcıyı kaydet
-    users[user] = { password: pass, balance: 0 };
-    localStorage.setItem('apex_users', JSON.stringify(users));
-    msg.style.color = "#2ea44f";
-    msg.innerText = "Kayıt başarılı! Şimdi giriş yapabilirsin.";
+    users[user] = { password: pass, balance: 0, clickPower: 10 };
+    saveData();
+    alert("Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
 }
 
 function girisYap() {
-    const user = document.getElementById('username').value.trim();
+    const user = document.getElementById('username').value;
     const pass = document.getElementById('password').value;
-    const msg = document.getElementById('message');
-
     if (users[user] && users[user].password === pass) {
         currentUser = user;
         document.getElementById('auth-section').style.display = 'none';
         document.getElementById('game-section').style.display = 'block';
-        document.getElementById('current-user').innerText = user;
+        document.getElementById('current-user').innerText = currentUser;
         guncelleArayuz();
-        msg.innerText = "";
     } else {
-        msg.style.color = "red";
-        msg.innerText = "Hatalı kullanıcı adı veya şifre!";
+        alert("Kullanıcı adı veya şifre hatalı!");
     }
 }
 
 function apexKazan() {
-    users[currentUser].balance += 10; // Apex kazanma
+    users[currentUser].balance += users[currentUser].clickPower;
     guncelleArayuz();
-    localStorage.setItem('apex_users', JSON.stringify(users)); // Otomatik bulut kayıt
+    saveData();
+}
+
+function esyaAl(isim, fiyat, bonus) {
+    if (users[currentUser].balance >= fiyat) {
+        users[currentUser].balance -= fiyat;
+        users[currentUser].clickPower += bonus;
+        alert(isim + " alındı! Kazancın arttı.");
+        guncelleArayuz();
+        saveData();
+    } else {
+        alert("Yeterli Apex yok!");
+    }
 }
 
 function guncelleArayuz() {
     document.getElementById('balance').innerText = users[currentUser].balance;
 }
 
+function saveData() {
+    localStorage.setItem('apex_users', JSON.stringify(users));
+}
+
 function cikisYap() {
-    location.reload(); // Sayfayı yenileyerek çıkış yap
+    location.reload();
 }
