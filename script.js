@@ -16,3 +16,17 @@ function apexKazan() {
     guncelleArayuz();
     saveData();
 }
+function saveData() {
+    localStorage.setItem('apex_users', JSON.stringify(users)); // Tüm ilerleme kaydedilir
+}
+
+function guncelleArayuz() {
+    // Sayıları 1.000, 10.000 şeklinde formatlar (Profesyonel görünüm)
+    document.getElementById('balance').innerText = users[currentUser].balance.toLocaleString();
+    document.getElementById('crystal').innerText = (users[currentUser].crystal || 0).toLocaleString();
+}
+
+function tabDegistir(tabName) {
+    document.getElementById('buildings').style.display = tabName === 'buildings' ? 'block' : 'none';
+    // Diğer sekmeler buraya eklenebilir
+}
