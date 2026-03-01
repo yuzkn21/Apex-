@@ -1,185 +1,88 @@
-// OYUN VERİLERİ VE KAYIT SİSTEMİ
 let users = JSON.parse(localStorage.getItem('apex_users')) || {};
 let currentUser = null;
 
-// GİRİŞ VE KAYIT EKRANI SEKMELERİ
-function authTabDegistir(tab) {
-    const loginForm = document.getElementById('login-form');
-    const regForm = document.getElementById('register-form');
-    const loginBtn = document.getElementById('login-tab-btn');
-    const regBtn = document.getElementById('register-tab-btn');
-
-    if (tab === 'login') {
-        loginForm.style.display = 'block';
-        regForm.style.display = 'none';
-        loginBtn.classList.add('active');
-        regBtn.classList.remove('active');
-    } else {
-        loginForm.style.display = 'none';
-        regForm.style.display = 'block';
-        loginBtn.classList.remove('active');
-        regBtn.classList.add('active');
-    }
+// GİRİŞ/KAYIT MANTIĞI
+function authTab(t) {
+    document.getElementById('login-form').style.display = t === 'login' ? 'block' : 'none';
+    document.getElementById('register-form').style.display = t === 'register' ? 'block' : 'none';
+    document.getElementById('login-tab-btn').className = t === 'login' ? 'active' : '';
+    document.getElementById('register-tab-btn').className = t === 'register' ? 'active' : '';
 }
 
-// KAYIT OLMA FONKSİYONU
 function kayitOl() {
-    const user = document.getElementById('reg-username').value.trim();
-    const pass = document.getElementById('reg-password').value;
-
-    if (user.length < 1 || pass.length < 6) {
-        alert("Kullanıcı adı boş olamaz ve şifre en az 6 karakter olmalıdır!");
-        return;
+    const u = document.getElementById('r-user').value;
+    const p = document.getElementById('r-pass').value;
+    if(u && p.length >= 6) {
+        if(users[u]) return alert("Bu isim alınmış!");
+        users[u] = { password: p, balance: 1000, crystal: 0, xp: 0, level: 1, crypto: 0 };
+        save();
+        alert("Kayıt başarılı! Giriş yapabilirsin.");
+        authTab('login');
     }
-    if (users[user]) {
-        alert("Bu kullanıcı adı zaten alınmış!");
-        return;
-    }
-
-    // Yeni kullanıcı şablonu
-    users[user] = { 
-        password: pass, 
-        balance: 0, 
-        crystal: 0, 
-        clickPower: 10,
-        inventory: [] 
-    };
-    
-    saveData();
-    alert("Kayıt başarılı! Şimdi giriş yapabilirsiniz.");
-    authTabDegistir('login');
 }
 
-// GİRİŞ YAPMA FONKSİYONU
 function girisYap() {
-    const user = document.getElementById('login-username').value.trim();
-    const pass = document.getElementById('login-password').value;
-
-    if (users[user] && users[user].password === pass) {
-        currentUser = user;
+    const u = document.getElementById('l-user').value;
+    const p = document.getElementById('l-pass').value;
+    if(users[u] && users[u].password === p) {
+        currentUser = u;
         document.getElementById('auth-container').style.display = 'none';
         document.getElementById('game-section').style.display = 'block';
-        document.getElementById('current-user-display').innerText = currentUser;
-        
-        // Eğer clickPower tanımlı değilse varsayılan yap
-        if(!users[currentUser].clickPower) users[currentUser].clickPower = 10;
-        
-        guncelleArayuz();
-    } else {
-        alert("Kullanıcı adı veya şifre hatalı!");
+        document.getElementById('display-user').innerText = currentUser;
+        updateUI();
+    } else alert("Hatalı giriş!");
+}
+
+// SATIŞ VE XP SİSTEMİ
+function satisYap(kazanc, xp) {
+    let user = users[currentUser];
+    user.balance += kazanc;
+    user.xp += xp;
+
+    // Seviye Atlama (XP Barı Parapania Tarzı)
+    let nextLevelXp = user.level * 1000;
+    if(user.xp >= nextLevelXp) {
+        user.level++;
+        user.xp = 0;
+        alert("TEBRİKLER! Seviye " + user.level + " oldun!");
     }
+    updateUI();
+    save();
 }
 
-// OYUN İÇİ SEKME DEĞİŞTİRME
-function tabDegistir(target) {
-    document.querySelectorAll('.content-tab').forEach(tab => tab.style.display = 'none');
-    document.getElementById(target).style.display = 'block';
-    
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    event.currentTarget.classList.add('active');
+// KRİPTO (BASİT BORSA)
+let cryptoPrice = 3.85;
+setInterval(() => {
+    cryptoPrice += (Math.random() * 0.4 - 0.2); // Fiyat dalgalanması
+    if(document.getElementById('xen-price')) 
+        document.getElementById('xen-price').innerText = cryptoPrice.toFixed(2) + " Apex";
+}, 3000);
+
+function updateUI() {
+    const u = users[currentUser];
+    document.getElementById('balance').innerText = u.balance.toLocaleString();
+    document.getElementById('crystal').innerText = u.crystal;
+    document.getElementById('u-level').innerText = u.level;
+    let progress = (u.xp / (u.level * 1000)) * 100;
+    document.getElementById('xp-fill').style.width = progress + "%";
 }
 
-// APEX KAZANMA (TIKLAMA)
-function apexKazan() {
-    users[currentUser].balance += users[currentUser].clickPower;
-    
-    // Küçük bir görsel efekt
-    const coin = document.querySelector('.coin-wrapper');
-    coin.style.transform = "scale(0.95)";
-    setTimeout(() => coin.style.transform = "scale(1)", 50);
-
-    guncelleArayuz();
-    saveData();
+function switchPane(p) {
+    document.querySelectorAll('.pane').forEach(el => el.style.display = 'none');
+    document.getElementById('pane-' + p).style.display = 'block';
 }
 
-// MARKET SİSTEMİ (MÜLK ALMA)
-function esyaAl(isim, fiyat, bonus) {
-    if (users[currentUser].balance >= fiyat) {
-        users[currentUser].balance -= fiyat;
-        users[currentUser].clickPower += bonus;
-        
-        alert("Hayırlı olsun! " + isim + " imparatorluğunu büyüttü.");
-        guncelleArayuz();
-        saveData();
-    } else {
-        alert("Yeterli Apex yok! Daha fazla tıklamalısın.");
-    }
-}
+function save() { localStorage.setItem('apex_users', JSON.stringify(users)); }
 
-// KRİSTAL DÖNÜŞTÜRME
-function kristalDonustur() {
-    if (users[currentUser].balance >= 10000) {
-        users[currentUser].balance -= 10000;
-        users[currentUser].crystal = (users[currentUser].crystal || 0) + 1;
-        alert("Tebrikler! 1 Apex Kristali kazandın.");
-        guncelleArayuz();
-        saveData();
-    } else {
-        alert("Kristal için 10.000 Apex gerekiyor!");
-    }
-}
-
-// CHAT SİSTEMİ
 function mesajGonder() {
-    const msg = document.getElementById('chat-input').value.trim();
-    if(msg) {
-        const chatBox = document.getElementById('messages');
-        const time = new Date().toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
-        chatBox.innerHTML += `<p style="margin: 5px 0;">[${time}] <strong>${currentUser}:</strong> ${msg}</p>`;
-        document.getElementById('chat-input').value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
+    const m = document.getElementById('chat-msg').value;
+    if(m) {
+        const box = document.getElementById('chat-display');
+        box.innerHTML += `<div class="msg"><strong>${currentUser}:</strong> ${m}</div>`;
+        document.getElementById('chat-msg').value = "";
+        box.scrollTop = box.scrollHeight;
     }
 }
 
-// ARAYÜZÜ GÜNCELLEME
-function guncelleArayuz() {
-    document.getElementById('balance').innerText = users[currentUser].balance.toLocaleString('tr-TR');
-    document.getElementById('crystal').innerText = (users[currentUser].crystal || 0).toLocaleString('tr-TR');
-    document.getElementById('user-level').innerText = "Kazanç: " + users[currentUser].clickPower.toLocaleString('tr-TR') + " / tık";
-}
-
-// VERİ KAYDETME
-function saveData() {
-    localStorage.setItem('apex_users', JSON.stringify(users));
-}
-
-// ÇIKIŞ YAPMA
-function cikisYap() {
-    if(confirm("Çıkış yapmak istediğine emin misin?")) {
-        location.reload();
-    }
-        }
-            // SADECE GERÇEK OYUNCULAR İÇİN ÖZEL SOHBET
-function mesajGonder() {
-    const msg = document.getElementById('chat-input').value.trim();
-    if(msg) {
-        const chatBox = document.getElementById('messages');
-        const time = new Date().toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
+function cikisYap() { location.reload(); }
         
-        // Mesaj Baloncuğu Tasarımı
-        chatBox.innerHTML += `
-            <div style="background: #1e293b; padding: 10px; border-radius: 10px; margin-bottom: 8px; border-left: 4px solid #f1c40f; align-self: flex-start; max-width: 90%;">
-                <small style="color: #f1c40f; font-weight: bold; display: block; margin-bottom: 3px;">${currentUser} <span style="color: #94a3b8; font-weight: normal; font-size: 10px;">• ${time}</span></small>
-                <span style="color: white; font-size: 14px;">${msg}</span>
-            </div>`;
-            
-        document.getElementById('chat-input').value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-}
-function mesajGonder() {
-    const msg = document.getElementById('chat-input').value.trim();
-    if(msg) {
-        const chatBox = document.getElementById('messages');
-        const time = new Date().toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
-        
-        chatBox.innerHTML += `
-            <div class="user-message-box">
-                <span class="user-name-tag">${currentUser} • ${time}</span>
-                <span class="user-text-content">${msg}</span>
-            </div>`;
-            
-        document.getElementById('chat-input').value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-}
