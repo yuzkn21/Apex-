@@ -3,33 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex</title>
+    <title>Birhat'ın Mekanı - Apex</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="game-container">
-        <h1>Apex</h1>
+        <h1>Birhat'ın Mekanı</h1>
         
         <div id="auth-section">
-            <input type="text" id="username" placeholder="Benzersiz Kullanıcı Adı">
-            <input type="password" id="password" placeholder="Şifre (Min. 6 Karakter)">
-            <div class="buttons">
-                <button onclick="kayitOl()">Kayıt Ol</button>
-                <button onclick="girisYap()">Giriş Yap</button>
-            </div>
+            <input type="text" id="username" placeholder="Kullanıcı Adı">
+            <input type="password" id="password" placeholder="Şifre (Min 6 Karakter)">
+            <button onclick="kayitOl()">Kayıt Ol</button>
+            <button onclick="girisYap()">Giriş Yap</button>
+            <p id="message"></p>
         </div>
 
         <div id="game-section" style="display:none;">
-            <h2>Hoş geldin, <span id="current-user"></span>!</h2>
             <div class="stats">
-                <p>Bakiye: <strong id="balance">0</strong> Apex</p>
+                <p>Hoş geldin, <span id="current-user"></span>!</p>
+                <p><strong>Apex Bakiyesi:</strong> <span id="balance">0</span></p>
             </div>
-            <button onclick="apexKazan()">Apex Kazan (+10)</button>
-            <button onclick="verileriBulutaYukle()" style="background-color: #2ea44f;">Verileri Buluta Kaydet</button>
-            <button onclick="cikisYap()">Çıkış Yap</button>
+            
+            <button onclick="apexKazan()" style="background-color: #58a6ff;">Apex Kazan (+)</button>
+            
+            <hr>
+            <h3>Ticaret Merkezi (Legal İşler)</h3>
+            <div id="shop">
+                <button onclick="esyaAl('Kurye Motoru', 50, 2)">Kurye Motoru (50 Apex) <br> <small>+2 Apex/Tık</small></button>
+                <button onclick="esyaAl('Lojistik Kamyonu', 200, 10)">Lojistik Kamyonu (200 Apex) <br> <small>+10 Apex/Tık</small></button>
+                <button onclick="esyaAl('Küçük Fabrika', 1000, 60)">Küçük Fabrika (1000 Apex) <br> <small>+60 Apex/Tık</small></button>
+            </div>
+
+            <button onclick="cikisYap()" style="background-color: #f85149; margin-top: 20px;">Çıkış Yap</button>
         </div>
-        
-        <p id="message"></p>
     </div>
     <script src="script.js"></script>
 </body>
