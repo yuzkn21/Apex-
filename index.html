@@ -10,13 +10,26 @@
     <div id="game-container">
         <h1>Birhat'ın Mekanı</h1>
         
-        <div id="auth-section">
-            <input type="text" id="username" placeholder="Kullanıcı Adı">
-            <input type="password" id="password" placeholder="Şifre (Min 6 Karakter)">
-            <button onclick="kayitOl()">Kayıt Ol</button>
-            <button onclick="girisYap()">Giriş Yap</button>
-            <p id="message"></p>
+        <div id="auth-container">
+    <div class="auth-tabs">
+        <button id="login-tab-btn" class="active" onclick="authTabDegistir('login')">Giriş Yap</button>
+        <button id="register-tab-btn" onclick="authTabDegistir('register')">Kayıt Ol</button>
+    </div>
+
+    <div id="login-form" class="auth-form">
+        <input type="text" id="login-username" placeholder="Kullanıcı Adı">
+        <input type="password" id="login-password" placeholder="Şifre">
+        <button onclick="girisYap()">Giriş Yap</button>
+    </div>
+
+    <div id="register-form" class="auth-form" style="display:none;">
+        <input type="text" id="reg-username" placeholder="Yeni Kullanıcı Adı">
+        <input type="password" id="reg-password" placeholder="Şifre (Min 6 Karakter)">
+        <button onclick="kayitOl()">Hesap Oluştur</button>
+    </div>
+    <p id="message"></p>
         </div>
+        
 
         <div id="game-section" style="display:none;">
             <div class="stats">
