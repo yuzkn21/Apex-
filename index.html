@@ -3,119 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Birhat'ın Mekanı - Apex İmparatorluğu</title>
+    <title>Birhat'ın Mekanı</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div id="auth-container">
-        <h1 style="text-align: center; color: #f1c40f; margin-bottom: 20px;">BİRHAT'IN MEKANI</h1>
-        <div class="auth-tabs">
-            <button id="login-tab-btn" class="active" onclick="authTabDegistir('login')">Giriş Yap</button>
-            <button id="register-tab-btn" onclick="authTabDegistir('register')">Kayıt Ol</button>
-        </div>
-
-        <div id="login-form" class="auth-form">
-            <input type="text" id="login-username" placeholder="Kullanıcı Adı">
-            <input type="password" id="login-password" placeholder="Şifre">
-            <button class="main-btn" onclick="girisYap()">MEKANA GİR</button>
-        </div>
-
-        <div id="register-form" class="auth-form" style="display:none;">
-            <input type="text" id="reg-username" placeholder="Yeni Kullanıcı Adı">
-            <input type="password" id="reg-password" placeholder="Şifre (En az 6 karakter)">
-            <button class="main-btn" onclick="kayitOl()" style="background: #27ae60; color: white;">HESAP OLUŞTUR</button>
+        <div class="auth-card">
+            <h1 class="logo">BİRHAT'IN MEKANI</h1>
+            <div class="auth-tabs">
+                <button id="login-tab-btn" class="active" onclick="authTab('login')">Giriş</button>
+                <button id="register-tab-btn" onclick="authTab('register')">Kayıt</button>
+            </div>
+            <div id="login-form">
+                <input type="text" id="l-user" placeholder="Kullanıcı Adı">
+                <input type="password" id="l-pass" placeholder="Şifre">
+                <button onclick="girisYap()" class="btn-main">BAŞLA</button>
+            </div>
+            <div id="register-form" style="display:none;">
+                <input type="text" id="r-user" placeholder="Kullanıcı Adı">
+                <input type="password" id="r-pass" placeholder="Şifre (Min 6)">
+                <button onclick="kayitOl()" class="btn-main btn-reg">HESAP AÇ</button>
+            </div>
         </div>
     </div>
 
     <div id="game-section" style="display:none;">
-        
-        <div class="game-header">
-            <div class="user-profile">
-                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Birhat" id="user-avatar">
-                <div class="user-text">
-                    <strong id="current-user-display">Oyuncu</strong>
-                    <p id="user-level">Kazanç: 10 / tık</p>
+        <header class="game-header">
+            <div class="player-profile">
+                <div class="avatar-circle">B</div>
+                <div class="xp-group">
+                    <span id="display-user">Birhat</span>
+                    <div class="xp-bar-bg"><div id="xp-fill"></div></div>
+                    <small>Seviye <span id="u-level">1</span></small>
                 </div>
             </div>
-            <div class="main-stats">
-                <div class="stat-box">
-                    <small>APEX</small>
-                    <span id="balance">0</span>
-                </div>
-                <div class="stat-box crystal">
-                    <small>KRİSTAL</small>
-                    <span id="crystal">0</span>
-                </div>
+            <div class="stats-group">
+                <div class="stat">🪙 <span id="balance">0</span> <small>Apex</small></div>
+                <div class="stat">💎 <span id="crystal">0</span> <small>Kristal</small></div>
             </div>
-        </div>
+        </header>
 
-        <div class="click-zone">
-            <div class="coin-wrapper" onclick="apexKazan()">
-                <img src="https://api.dicebear.com/7.x/icons/svg?seed=gold" alt="Apex Coin">
-            </div>
-            <p class="click-hint">Kazanmak için dokun!</p>
-        </div>
-
-        <div class="game-tabs">
-            <button class="tab-btn active" onclick="tabDegistir('market')">🛒 Market</button>
-            <button class="tab-btn" onclick="tabDegistir('borsa')">📈 Borsa</button>
-            <button class="tab-btn" onclick="tabDegistir('sohbet')">💬 Sohbet</button>
-        </div>
-
-        <div class="content-container">
-            
-            <div id="market" class="content-tab">
-                <div class="upgrade-item">
-                    <div class="item-info">
-                        <span>🚜 Apex Çiftliği</span>
-                        <small>+20 Apex/Tık</small>
+        <main class="content-pane">
+            <div id="pane-shops" class="pane active">
+                <h3 class="pane-title">İşletmelerin</h3>
+                <div id="property-list">
+                    <div class="card">
+                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=200">
+                        <div class="card-body">
+                            <h4>Apex Market</h4>
+                            <p>Diyarbakır</p>
+                            <span class="income-tag">+250 Apex / Satış</span>
+                        </div>
+                        <button onclick="satisYap(250, 100)" class="btn-sell">SAT</button>
                     </div>
-                    <button onclick="esyaAl('Çiftlik', 500, 20)">500 Apex</button>
-                </div>
-                <div class="upgrade-item">
-                    <div class="item-info">
-                        <span>🏭 Tekstil Fabrikası</span>
-                        <small>+150 Apex/Tık</small>
-                    </div>
-                    <button onclick="esyaAl('Fabrika', 3000, 150)">3.000 Apex</button>
-                </div>
-                <div class="upgrade-item">
-                    <div class="item-info">
-                        <span>💎 Elmas Madeni</span>
-                        <small>+800 Apex/Tık</small>
-                    </div>
-                    <button onclick="esyaAl('Maden', 15000, 800)">15.000 Apex</button>
-                </div>
-                <div class="upgrade-item">
-                    <div class="item-info">
-                        <span>🌐 "Birhat" Teknoloji</span>
-                        <small>+5000 Apex/Tık</small>
-                    </div>
-                    <button onclick="esyaAl('Marka', 100000, 5000)">100.000 Apex</button>
-                </div>
-                <button class="convert-btn" onclick="kristalDonustur()">💎 10.000 Apex -> 1 Kristal</button>
-            </div>
-
-            <div id="borsa" class="content-tab" style="display:none;">
-                <div class="info-card">
-                    <h3>📈 Canlı Borsa</h3>
-                    <p>Apex piyasası şu an stabil.</p>
-                    <div class="placeholder-box">Yatırım araçları yakında eklenecek!</div>
                 </div>
             </div>
 
-            <div id="sohbet" class="content-tab" style="display:none;">
-                <div id="messages"></div>
-                <div class="chat-input-row">
-                    <input type="text" id="chat-input" placeholder="Mesajını yaz...">
+            <div id="pane-crypto" class="pane" style="display:none;">
+                <h3 class="pane-title">Kripto Borsası</h3>
+                <div class="crypto-card">
+                    <div class="c-info"><strong>Xenon (XEN)</strong> <span id="xen-price">3.85 ₺</span></div>
+                    <button class="btn-buy" onclick="kriptoIslem('buy')">AL</button>
+                    <button class="btn-sell-c" onclick="kriptoIslem('sell')">SAT</button>
+                </div>
+            </div>
+
+            <div id="pane-chat" class="pane" style="display:none;">
+                <div id="chat-display"></div>
+                <div class="chat-input-group">
+                    <input type="text" id="chat-msg" placeholder="Mesaj gönder...">
                     <button onclick="mesajGonder()">🚀</button>
                 </div>
             </div>
-        </div>
+        </main>
 
-        <button class="logout-btn" onclick="cikisYap()">GÜVENLİ ÇIKIŞ</button>
+        <nav class="bottom-nav">
+            <button onclick="switchPane('shops')">🏪 Dükkan</button>
+            <button onclick="switchPane('crypto')">📈 Borsa</button>
+            <button onclick="switchPane('chat')">💬 Sohbet</button>
+            <button onclick="cikisYap()">🚪 Çıkış</button>
+        </nav>
     </div>
 
     <script src="script.js"></script>
