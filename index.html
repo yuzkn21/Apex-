@@ -30,25 +30,68 @@
     <p id="message"></p>
         </div>
         
-
-        <div id="game-section" style="display:none;">
-            <div class="stats">
-                <p>Hoş geldin, <span id="current-user"></span>!</p>
-                <p><strong>Apex Bakiyesi:</strong> <span id="balance">0</span></p>
+<div id="game-section" style="display:none;">
+    <div class="game-header">
+        <div class="user-profile">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Birhat" id="user-avatar">
+            <div>
+                <h4 id="current-user-display">Oyuncu</h4>
+                <p style="font-size: 12px; color: #94a3b8;">Mekan Sahibi</p>
             </div>
-            
-            <button onclick="apexKazan()" style="background-color: #58a6ff;">Apex Kazan (+)</button>
-            
-            <hr>
-            <h3>Ticaret Merkezi (Legal İşler)</h3>
-            <div id="shop">
-                <button onclick="esyaAl('Kurye Motoru', 50, 2)">Kurye Motoru (50 Apex) <br> <small>+2 Apex/Tık</small></button>
-                <button onclick="esyaAl('Lojistik Kamyonu', 200, 10)">Lojistik Kamyonu (200 Apex) <br> <small>+10 Apex/Tık</small></button>
-                <button onclick="esyaAl('Küçük Fabrika', 1000, 60)">Küçük Fabrika (1000 Apex) <br> <small>+60 Apex/Tık</small></button>
-            </div>
-
-            <button onclick="cikisYap()" style="background-color: #f85149; margin-top: 20px;">Çıkış Yap</button>
         </div>
+        <div class="main-stats">
+            <div class="stat-box">
+                <small>APEX</small>
+                <span id="balance">0</span>
+            </div>
+            <div class="stat-box crystal">
+                <small>KRİSTAL</small>
+                <span id="crystal">0</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="click-zone">
+        <div class="coin-wrapper" onclick="apexKazan()">
+            <img src="https://api.dicebear.com/7.x/icons/svg?seed=gold" alt="Apex Coin" style="width: 60px;">
+        </div>
+        <p class="click-info" style="margin-top: 15px; color: #94a3b8;">Tıkla ve Apex Kazan!</p>
+    </div>
+
+    <div class="game-tabs" style="display: flex; gap: 5px; margin-bottom: 15px;">
+        <button class="tab-btn active" onclick="tabDegistir('market')">🛒 Market</button>
+        <button class="tab-btn" onclick="tabDegistir('borsa')">📈 Borsa</button>
+        <button class="tab-btn" onclick="tabDegistir('sohbet')">💬 Sohbet</button>
+    </div>
+
+    <div id="market" class="content-tab">
+        <div class="upgrade-item">
+            <span>📦 Kurye Ağı (+5)</span>
+            <button onclick="esyaAl('Kurye', 100, 5)">100 Apex</button>
+        </div>
+        <div class="upgrade-item">
+            <span>🏭 Fabrika (+50)</span>
+            <button onclick="esyaAl('Fabrika', 1000, 50)">1.000 Apex</button>
+        </div>
+    </div>
+
+    <div id="borsa" class="content-tab" style="display:none;">
+        <div class="placeholder-box" style="background: #1e293b; padding: 20px; border-radius: 10px; text-align: center;">
+            Borsa sistemi çok yakında!
+        </div>
+    </div>
+
+    <div id="sohbet" class="content-tab" style="display:none;">
+        <div id="messages" style="height: 150px; overflow-y: auto; background: rgba(0,0,0,0.2); margin-bottom: 10px; padding: 10px; border-radius: 8px; text-align: left;"></div>
+        <div class="chat-input-row" style="display: flex; gap: 5px;">
+            <input type="text" id="chat-input" placeholder="Mesaj yaz..." style="flex: 1; padding: 8px; border-radius: 5px; border: none; background: #0f172a; color: white;">
+            <button onclick="mesajGonder()" style="padding: 8px 15px; background: #f1c40f; border: none; border-radius: 5px; color: #0f172a; font-weight: bold;">🚀</button>
+        </div>
+    </div>
+
+    <button class="logout-btn" onclick="cikisYap()" style="background: #e74c3c; color: white; width: 100%; margin-top: 20px; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">Güvenli Çıkış</button>
+        </div>
+        
     </div>
     <script src="script.js"></script>
 </body>
