@@ -36,54 +36,32 @@
     </div>
 
     <div id="game-section" style="display:none;">
-        <header class="game-header">
-            <div class="player-info" onclick="toggleProfile()">
-                <div class="avatar">B</div>
-                <div class="xp-group">
-                    <span id="display-user">...</span>
-                    <div class="xp-bar-bg"><div id="xp-fill"></div></div>
+        <header class="top-bar">
+            <div class="user-main" onclick="toggleProfile()">
+                <div class="p-frame"><img src="https://via.placeholder.com/50" id="user-img"></div>
+                <div class="xp-info">
+                    <span id="display-user">Birhat</span>
+                    <div class="xp-progress"><div id="xp-fill"></div></div>
+                    <small>Seviye: <span id="u-level">1</span></small>
                 </div>
             </div>
-            <div class="money-info">
-                <div>🪙 <span id="balance">0</span></div>
-                <div style="color: #00d2ff;">💎 <span id="crystal">0</span></div>
+            <div class="stats-main">
+                <div class="stat-box">🪙 <span id="balance">0</span></div>
+                <div class="stat-box" style="color: #00d2ff;">💎 <span id="crystal">0</span></div>
             </div>
         </header>
 
-        <div id="category-bar" class="category-nav">
-            <button onclick="displayMarket('dukkan')" class="cat-btn">🏪 Dükkan</button>
-            <button onclick="displayMarket('ciftlik')" class="cat-btn">🚜 Çiftlik</button>
-            <button onclick="displayMarket('fabrika')" class="cat-btn">🏭 Fabrika</button>
-            <button onclick="displayMarket('maden')" class="cat-btn">💎 Maden</button>
-        </div>
-
-        <main class="content-area">
-            <div id="pane-shops" class="pane active">
-                <div id="property-list"></div>
-            </div>
-            <div id="pane-markalar" class="pane" style="display:none;">
-                <div id="brand-list"></div>
-            </div>
-            <div id="pane-crypto" class="pane" style="display:none;">
-                <div class="crypto-card">
-                    <h3>Xenon (XEN)</h3>
-                    <h2 id="xen-price">3.85 Apex</h2>
-                </div>
-            </div>
-            <div id="pane-chat" class="pane" style="display:none;">
-                <div id="chat-display"></div>
-                <div class="chat-input-row">
-                    <input type="text" id="chat-msg" placeholder="Mesaj yaz...">
-                    <button onclick="mesajGonder()">🚀</button>
-                </div>
-            </div>
+        <main class="game-content">
+            <div id="property-list"></div>
         </main>
 
-        <nav class="bottom-nav">
-            <button onclick="switchPane('shops')">🏠 Mekanlar</button>
-            <button onclick="switchPane('markalar')">🚀 Markalar</button>
-            <button onclick="switchPane('crypto')">📈 Borsa</button>
-            <button onclick="switchPane('chat')">💬 Sohbet</button>
+        <nav class="bottom-bar">
+            <div class="nav-item" onclick="displayMarket('dukkan')"><span>🏪</span><small>Dükkanlar</small></div>
+            <div class="nav-item" onclick="displayMarket('bahce')"><span>🌿</span><small>Bahçeler</small></div>
+            <div class="nav-item" onclick="displayMarket('ciftlik')"><span>🥚</span><small>Çiftlikler</small></div>
+            <div class="nav-item" onclick="displayMarket('fabrika')"><span>🏭</span><small>Fabrikalar</small></div>
+            <div class="nav-item" onclick="displayMarket('maden')"><span>🏗️</span><small>Madenler</small></div>
+            <div class="nav-item highlight" onclick="displayMarket('marka')"><span>🏢</span><small>Marka</small></div>
         </nav>
     </div>
 
@@ -94,15 +72,15 @@
             <h2 id="p-name">Birhat</h2>
             <span id="p-city" class="city-badge">Diyarbakır</span>
             <div class="profile-stats">
-                <div class="p-stat"> <small>Seviye</small> <p id="p-level">1</p> </div>
-                <div class="p-stat"> <small>Ünvan</small> <p id="p-rank" style="color: #f1c40f;">Çırak</p> </div>
+                <div class="p-stat"><small>Ünvan</small><p id="p-rank">Çırak</p></div>
+                <div class="p-stat"><small>Servet</small><p id="p-wealth">0</p></div>
             </div>
             <button onclick="gunlukOdulAl()" class="btn-daily">🎁 Günlük Ödül</button>
-            <button onclick="cikisYap()" class="btn-logout">Çıkış Yap</button>
+            <button onclick="cikisYap()" class="btn-logout">Güvenli Çıkış</button>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
-                                                              </html>
-                                                              
+        </html>
+        
