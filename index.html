@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Birhat'ın Mekanı - Apex İmparatorluğu</title>
+    <title>Birhat'ın Mekanı</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
@@ -16,86 +16,93 @@
                 <button id="login-tab-btn" class="active" onclick="authTab('login')">Giriş</button>
                 <button id="register-tab-btn" onclick="authTab('register')">Kayıt</button>
             </div>
-            
             <div id="login-form" class="auth-form">
                 <input type="text" id="l-user" placeholder="Kullanıcı Adı">
                 <input type="password" id="l-pass" placeholder="Şifre">
-                <button onclick="girisYap()" class="btn-main">MEKANA GİR</button>
+                <button onclick="girisYap()" class="btn-main">BAŞLA</button>
             </div>
-
             <div id="register-form" class="auth-form" style="display:none;">
-                <input type="text" id="r-user" placeholder="Yeni Kullanıcı Adı">
-                <input type="password" id="r-pass" placeholder="Şifre (Min 6 Karakter)">
-                <button onclick="kayitOl()" class="btn-main" style="background: #27ae60;">HESAP AÇ</button>
+                <input type="text" id="r-user" placeholder="Kullanıcı Adı">
+                <input type="password" id="r-pass" placeholder="Şifre (Min 6)">
+                <select id="r-city" class="auth-input">
+                    <option value="Diyarbakır">Diyarbakır</option>
+                    <option value="Ankara">Ankara</option>
+                    <option value="İstanbul">İstanbul</option>
+                    <option value="İzmir">İzmir</option>
+                </select>
+                <button onclick="kayitOl()" class="btn-main" style="background: #27ae60;">KAYIT OL</button>
             </div>
         </div>
     </div>
 
     <div id="game-section" style="display:none;">
-        
         <header class="game-header">
-            <div class="header-top">
-                <div class="player-info">
-                    <div class="avatar" onclick="cikisYap()">B</div> <div class="xp-details">
-                        <span id="display-user">Yükleniyor...</span>
-                        <div class="xp-bar-bg"><div id="xp-fill"></div></div>
-                        <small>Seviye <span id="u-level">1</span></small>
-                    </div>
+            <div class="player-info" onclick="toggleProfile()">
+                <div class="avatar">B</div>
+                <div class="xp-group">
+                    <span id="display-user">...</span>
+                    <div class="xp-bar-bg"><div id="xp-fill"></div></div>
                 </div>
-                <div class="currency-group">
-                    <div class="c-box">🪙 <span id="balance">0</span></div>
-                    <div class="c-box crystal">💎 <span id="crystal">0</span></div>
-                </div>
+            </div>
+            <div class="money-info">
+                <div>🪙 <span id="balance">0</span></div>
+                <div style="color: #00d2ff;">💎 <span id="crystal">0</span></div>
             </div>
         </header>
 
         <div id="category-bar" class="category-nav">
-            <button onclick="displayMarket('dukkan')" class="cat-btn active">🏪 Dükkan</button>
+            <button onclick="displayMarket('dukkan')" class="cat-btn">🏪 Dükkan</button>
             <button onclick="displayMarket('ciftlik')" class="cat-btn">🚜 Çiftlik</button>
             <button onclick="displayMarket('fabrika')" class="cat-btn">🏭 Fabrika</button>
             <button onclick="displayMarket('maden')" class="cat-btn">💎 Maden</button>
         </div>
 
-        <main class="main-content">
+        <main class="content-area">
             <div id="pane-shops" class="pane active">
-                <div id="property-list">
-                    </div>
+                <div id="property-list"></div>
             </div>
-
             <div id="pane-markalar" class="pane" style="display:none;">
-                <h2 class="pane-title">Global Markaların</h2>
-                <div id="brand-list">
-                    </div>
+                <div id="brand-list"></div>
             </div>
-
             <div id="pane-crypto" class="pane" style="display:none;">
-                <h2 class="pane-title">Apex Borsası</h2>
                 <div class="crypto-card">
-                    <div class="c-info"><strong>Xenon Coin (XEN)</strong> <span id="xen-price">3.85 ₺</span></div>
-                    <div class="c-btns">
-                        <button class="buy">AL</button>
-                        <button class="sell">SAT</button>
-                    </div>
+                    <h3>Xenon (XEN)</h3>
+                    <h2 id="xen-price">3.85 Apex</h2>
                 </div>
             </div>
-
             <div id="pane-chat" class="pane" style="display:none;">
                 <div id="chat-display"></div>
                 <div class="chat-input-row">
-                    <input type="text" id="chat-msg" placeholder="Mesajını yaz...">
+                    <input type="text" id="chat-msg" placeholder="Mesaj yaz...">
                     <button onclick="mesajGonder()">🚀</button>
                 </div>
             </div>
         </main>
 
         <nav class="bottom-nav">
-            <button onclick="switchPane('shops')" class="nav-item">🏠 Mekanlar</button>
-            <button onclick="switchPane('markalar')" class="nav-item">🚀 Markalar</button>
-            <button onclick="switchPane('crypto')" class="nav-item">📈 Borsa</button>
-            <button onclick="switchPane('chat')" class="nav-item">💬 Sohbet</button>
+            <button onclick="switchPane('shops')">🏠 Mekanlar</button>
+            <button onclick="switchPane('markalar')">🚀 Markalar</button>
+            <button onclick="switchPane('crypto')">📈 Borsa</button>
+            <button onclick="switchPane('chat')">💬 Sohbet</button>
         </nav>
+    </div>
+
+    <div id="profile-modal" class="modal-overlay" style="display:none;">
+        <div class="profile-card">
+            <button class="close-btn" onclick="toggleProfile()">×</button>
+            <div class="big-avatar">B</div>
+            <h2 id="p-name">Birhat</h2>
+            <span id="p-city" class="city-badge">Diyarbakır</span>
+            <div class="profile-stats">
+                <div class="p-stat"> <small>Seviye</small> <p id="p-level">1</p> </div>
+                <div class="p-stat"> <small>Ünvan</small> <p id="p-rank" style="color: #f1c40f;">Çırak</p> </div>
+            </div>
+            <button onclick="gunlukOdulAl()" class="btn-daily">🎁 Günlük Ödül</button>
+            <button onclick="cikisYap()" class="btn-logout">Çıkış Yap</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
 </body>
-</html>
+                                                              </html>
+                                                              
