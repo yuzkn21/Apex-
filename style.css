@@ -18,3 +18,91 @@ body { background: var(--bg); color: var(--text); font-family: 'Roboto', sans-se
 /* Butonlar */
 .btn-sell { background: var(--primary); color: #000; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; margin-left: auto; }
 .btn-main { width: 100%; padding: 12px; background: var(--primary); border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+/* GİRİŞ EKRANI ÖZEL TASARIMI */
+#auth-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, #1a1d23 0%, #0d1117 100%);
+    padding: 20px;
+}
+
+.auth-card {
+    background: #161b22;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #30363d;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 800;
+    color: #f1c40f;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
+}
+
+.auth-tabs {
+    display: flex;
+    background: #0d1117;
+    border-radius: 12px;
+    padding: 5px;
+    margin-bottom: 25px;
+}
+
+.auth-tabs button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: none;
+    color: #8b949e;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.auth-tabs button.active {
+    background: #f1c40f;
+    color: #0d1117;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    color: white;
+    border-radius: 12px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.auth-form input:focus {
+    border-color: #f1c40f;
+    outline: none;
+}
+
+.btn-main {
+    width: 100%;
+    padding: 15px;
+    background: #f1c40f;
+    color: #0d1117;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-main:active {
+    transform: scale(0.98);
+}
