@@ -109,3 +109,39 @@ body { background: var(--bg-dark); color: white; font-family: 'Inter', sans-seri
     position: fixed; bottom: 0; width: 100%; max-width: 450px;
     background: #020617; border-top: 1px solid #334155;
 }
+/* --- SADECE OYUNCULARA ÖZEL ŞIK SOHBET --- */
+#messages {
+    height: 300px; /* Sohbet alanını biraz daha büyüttük */
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-message-box {
+    background: #1e293b;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border-left: 4px solid #f1c40f; /* Mekan rengi olan sarı */
+    align-self: flex-start;
+    max-width: 85%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.user-name-tag {
+    color: #f1c40f;
+    font-weight: bold;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.user-text-content {
+    color: #e2e8f0;
+    font-size: 14px;
+    word-wrap: break-word;
+}
