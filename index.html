@@ -84,3 +84,55 @@
 </body>
         </html>
         
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Birhat'ın Mekanı</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="profile-info" onclick="toggleProfile()">
+            <div class="avatar-circle">B</div>
+            <div class="xp-group">
+                <span id="display-user">Birhat</span>
+                <div class="xp-bg"><div id="xp-fill"></div></div>
+                <small>Lvl: <span id="u-level">1</span></small>
+            </div>
+        </div>
+        <div class="money-group">
+            <div class="econ-item">🪙 <span id="balance">2500</span></div>
+            <div class="econ-item" style="color: #00d2ff;">💎 <span id="crystal">0</span></div>
+        </div>
+    </header>
+
+    <main class="game-content" id="property-list">
+        </main>
+
+    <nav class="bottom-nav">
+        <div class="nav-btn" onclick="displayMarket('dukkan')">
+            <span>🏪</span><p>Dükkanlar</p>
+        </div>
+        <div class="nav-btn" onclick="displayMarket('bahce')">
+            <span>🌿</span><p>Bahçeler</p>
+        </div>
+        <div class="nav-btn" onclick="displayMarket('ciftlik')">
+            <span>🥚</span><p>Çiftlikler</p>
+        </div>
+        <div class="nav-btn" onclick="displayMarket('fabrika')">
+            <span>🏭</span><p>Fabrikalar</p>
+        </div>
+        <div class="nav-btn" onclick="displayMarket('maden')">
+            <span>🏗️</span><p>Madenler</p>
+        </div>
+        <div class="nav-btn highlight" onclick="displayMarket('marka')">
+            <span class="yellow-icon">🏢</span><p class="yellow-text">Marka</p>
+        </div>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
