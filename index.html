@@ -40,3 +40,44 @@
     <script src="script.js"></script>
 </body>
 </html>
+<div id="game-container">
+    <div class="header">
+        <h1>BİRHAT'IN MEKANI</h1>
+        <p>Apex İmparatorluğu</p>
+    </div>
+
+    <div class="main-stats">
+        <div class="stat-card">
+            <span class="label">APEX</span>
+            <span id="balance" class="value">0</span>
+        </div>
+        <div class="stat-card crystal">
+            <span class="label">KRİSTAL</span>
+            <span id="crystal" class="value">0</span>
+        </div>
+    </div>
+
+    <div class="action-area">
+        <button id="main-clicker" onclick="apexKazan()">
+            <img src="https://api.dicebear.com/7.x/icons/svg?seed=coins" alt="Apex">
+        </button>
+    </div>
+
+    <div class="shop-container">
+        <h3>TİCARET & YATIRIM</h3>
+        <div class="shop-grid">
+            <button onclick="esyaAl('Kurye', 100, 5)">📦 Kurye Ağı (+5)</button>
+            <button onclick="esyaAl('Borsa', 1000, 60)">📈 Borsa Ofisi (+60)</button>
+            <button onclick="esyaAl('Yat', 10000, 500)">🚢 Lüks Yat (+500)</button>
+        </div>
+        <button class="convert-btn" onclick="kristalDonustur()">💎 10k Apex -> 1 Kristal</button>
+    </div>
+
+    <div class="chat-section">
+        <div id="messages"></div>
+        <div class="chat-input-group">
+            <input type="text" id="chat-input" placeholder="Mesaj gönder...">
+            <button onclick="mesajGonder()">🚀</button>
+        </div>
+    </div>
+</div>
