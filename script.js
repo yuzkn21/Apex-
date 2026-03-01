@@ -3,10 +3,11 @@ let currentUser = null;
 
 const properties = [
     { id: 1, type: 'dukkan', name: 'Apex Market', price: 1500, income: 250, level: 1, img: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=200' },
-    { id: 2, type: 'ciftlik', name: 'Zeytin Bahçesi', price: 20000, income: 3500, level: 10, img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=200' },
-    { id: 3, type: 'fabrika', name: 'Tekstil Fabrikası', price: 150000, income: 22000, level: 25, img: 'https://images.unsplash.com/photo-1558444458-5f75bc94356a?w=200' },
-    { id: 4, type: 'maden', name: 'Altın Madeni', price: 450000, income: 65000, level: 40, img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200' },
-    { id: 5, type: 'marka', name: 'Birhat Global', price: 2500000, income: 350000, level: 50, img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400' }
+    { id: 2, type: 'bahce', name: 'Zeytin Bahçesi', price: 12000, income: 2100, level: 5, img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=200' },
+    { id: 3, type: 'ciftlik', name: 'Büyükbaş Çiftliği', price: 50000, income: 9000, level: 15, img: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=200' },
+    { id: 4, type: 'fabrika', name: 'Tekstil Fabrikası', price: 180000, income: 28000, level: 30, img: 'https://images.unsplash.com/photo-1558444458-5f75bc94356a?w=200' },
+    { id: 5, type: 'maden', name: 'Altın Madeni', price: 600000, income: 95000, level: 45, img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=200' },
+    { id: 6, type: 'marka', name: 'Birhat Global Holding', price: 3000000, income: 450000, level: 50, img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400' }
 ];
 
 function authTab(t) {
@@ -20,7 +21,7 @@ function kayitOl() {
     const c = document.getElementById('r-city').value;
     if(u && p.length >= 6) {
         users[u] = { password: p, city: c, balance: 2500, crystal: 0, xp: 0, level: 1, inventory: [], lastDaily: 0 };
-        save(); alert("Kayıt başarılı!"); authTab('login');
+        save(); alert("Hesap açıldı, giriş yap!"); authTab('login');
     }
 }
 
@@ -31,35 +32,25 @@ function girisYap() {
         currentUser = u;
         document.getElementById('auth-container').style.display = 'none';
         document.getElementById('game-section').style.display = 'block';
-        document.getElementById('display-user').innerText = currentUser;
         updateUI(); displayMarket('dukkan'); startSessizBotlar();
     }
 }
 
-function switchPane(p) {
-    document.querySelectorAll('.pane').forEach(el => el.style.display = 'none');
-    document.getElementById('pane-' + p).style.display = 'block';
-    document.getElementById('category-bar').style.display = (p === 'shops') ? 'flex' : 'none';
-    if(p === 'markalar') displayMarket('marka', 'brand-list');
-}
-
-function displayMarket(type, target = 'property-list') {
-    const list = document.getElementById(target);
+function displayMarket(kategori) {
+    const list = document.getElementById('property-list');
     const user = users[currentUser];
     list.innerHTML = "";
-    properties.filter(p => p.type === type).forEach(p => {
+    properties.filter(p => p.type === kategori).forEach(p => {
         const isLocked = user.level < p.level;
         const owns = user.inventory.includes(p.id);
         list.innerHTML += `
-            <div class="card ${isLocked ? 'locked' : ''}">
-                <img src="${p.img}">
-                <div class="card-body">
-                    <h4>${p.name}</h4>
-                    <small>${isLocked ? 'Lvl ' + p.level : user.city}</small>
-                    <p>+${p.income.toLocaleString()} Apex</p>
+            <div class="card ${isLocked ? 'locked' : ''}" onclick="${isLocked ? '' : (owns ? `satisYap(${p.id})` : `esyaAl(${p.id})`)}">
+                <img src="${p.img}" class="prop-img">
+                <div class="card-info">
+                    <h3>${p.name} ${isLocked ? '🔒' : ''}</h3>
+                    <p>${isLocked ? 'Seviye: '+p.level : user.city}</p>
+                    <span class="badge">${owns ? '+'+p.income.toLocaleString()+' Apex' : p.price.toLocaleString()+' 🪙'}</span>
                 </div>
-                ${owns ? `<button onclick="satisYap(${p.id})" class="btn-sell">SAT</button>` : 
-                `<button onclick="esyaAl(${p.id})" ${isLocked ? 'disabled' : ''} class="btn-buy">${p.price}🪙</button>`}
             </div>`;
     });
 }
@@ -67,8 +58,8 @@ function displayMarket(type, target = 'property-list') {
 function satisYap(id) {
     const p = properties.find(x => x.id === id);
     const u = users[currentUser];
-    u.balance += p.income; u.xp += (p.type === 'marka' ? 1000 : 200);
-    if(u.xp >= u.level * 2000) { u.level++; u.xp = 0; alert("Level Up!"); }
+    u.balance += p.income; u.xp += (p.type === 'marka' ? 1200 : 250);
+    if(u.xp >= u.level * 2000) { u.level++; u.xp = 0; alert("LEVEL UP!"); }
     updateUI(); save();
 }
 
@@ -78,13 +69,21 @@ function esyaAl(id) {
     if(u.balance >= p.price) { u.balance -= p.price; u.inventory.push(id); save(); displayMarket(p.type); updateUI(); }
 }
 
+function updateUI() {
+    const u = users[currentUser];
+    document.getElementById('display-user').innerText = currentUser;
+    document.getElementById('balance').innerText = Math.floor(u.balance).toLocaleString();
+    document.getElementById('u-level').innerText = u.level;
+    document.getElementById('xp-fill').style.width = (u.xp / (u.level * 2000) * 100) + "%";
+}
+
 function toggleProfile() {
     const m = document.getElementById('profile-modal');
     const u = users[currentUser];
     if(m.style.display === 'none') {
         document.getElementById('p-name').innerText = currentUser;
         document.getElementById('p-city').innerText = u.city;
-        document.getElementById('p-level').innerText = u.level;
+        document.getElementById('p-wealth').innerText = u.balance.toLocaleString();
         m.style.display = 'flex';
     } else m.style.display = 'none';
 }
@@ -92,16 +91,11 @@ function toggleProfile() {
 function gunlukOdulAl() {
     const u = users[currentUser];
     if(Date.now() - u.lastDaily > 86400000) {
-        u.balance += 5000; u.lastDaily = Date.now(); save(); updateUI(); alert("5000 Apex alındı!");
-    } else alert("Yarın gel!");
+        u.balance += 5000; u.lastDaily = Date.now(); save(); updateUI(); alert("5000 Apex eklendi!");
+    } else alert("Yarın tekrar gel!");
 }
 
-function startSessizBotlar() { setInterval(() => console.log("Bot yatırımı..."), 30000); }
-function updateUI() {
-    const u = users[currentUser];
-    document.getElementById('balance').innerText = Math.floor(u.balance).toLocaleString();
-    document.getElementById('u-level').innerText = u.level;
-    document.getElementById('xp-fill').style.width = (u.xp / (u.level * 2000) * 100) + "%";
-}
+function startSessizBotlar() { setInterval(() => console.log("Hizmet çalışıyor..."), 60000); }
 function save() { localStorage.setItem('apex_users', JSON.stringify(users)); }
 function cikisYap() { location.reload(); }
+        
