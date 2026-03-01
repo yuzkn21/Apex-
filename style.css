@@ -68,3 +68,44 @@ body {
     overflow-y: auto;
     font-size: 12px;
 }
+:root {
+    --primary: #f1c40f;
+    --bg-dark: #0f172a;
+    --card-bg: #1e293b;
+}
+
+body { background: var(--bg-dark); color: white; font-family: 'Inter', sans-serif; margin: 0; }
+
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky; top: 0; z-index: 100;
+}
+
+.main-coin {
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, #f59e0b, #b45309);
+    border-radius: 50%;
+    margin: 40px auto;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.main-coin:active { transform: scale(0.9); }
+
+.item-card {
+    background: var(--card-bg);
+    margin: 10px; padding: 15px;
+    border-radius: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+.global-chat {
+    position: fixed; bottom: 0; width: 100%; max-width: 450px;
+    background: #020617; border-top: 1px solid #334155;
+}
