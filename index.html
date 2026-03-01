@@ -81,3 +81,45 @@
         </div>
     </div>
 </div>
+<div id="game-container">
+    <div class="top-nav">
+        <div class="user-info">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Birhat" class="mini-avatar">
+            <span id="current-user">Oyuncu</span>
+        </div>
+        <div class="currency-bar">
+            <span>Apex: <strong id="balance">0</strong></span>
+            <span>Kristal: <strong id="crystal">0</strong></span>
+        </div>
+    </div>
+
+    <div class="click-center">
+        <div class="main-coin" onclick="apexKazan()">
+            <img src="https://api.dicebear.com/7.x/icons/svg?seed=money" alt="Coin">
+        </div>
+    </div>
+
+    <div class="business-tabs">
+        <button onclick="tabDegistir('buildings')">🏙️ Binalar</button>
+        <button onclick="tabDegistir('upgrades')">⚡ Geliştirmeler</button>
+    </div>
+
+    <div id="buildings" class="tab-content">
+        <div class="item-card">
+            <span>🚛 Lojistik Firması</span>
+            <button onclick="esyaAl('Lojistik', 500, 25)">500 Apex (+25)</button>
+        </div>
+        <div class="item-card">
+            <span>💻 Yazılım Şirketi</span>
+            <button onclick="esyaAl('Yazılım', 2500, 150)">2500 Apex (+150)</button>
+        </div>
+    </div>
+
+    <div class="global-chat">
+        <div id="messages"></div>
+        <div class="input-row">
+            <input type="text" id="chat-input" placeholder="Mekanda konuş...">
+            <button onclick="mesajGonder()">▶</button>
+        </div>
+    </div>
+</div>
