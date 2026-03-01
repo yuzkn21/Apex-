@@ -86,3 +86,5 @@ function mesajGonder() {
 
 function cikisYap() { location.reload(); }
         
+// Giriş başarılı olduktan sonra avatarı güncelle
+document.getElementById('user-avatar').src = `https://api.dicebear.com/7.x/bottts/svg?seed=${currentUser}`;
