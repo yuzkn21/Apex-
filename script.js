@@ -167,3 +167,19 @@ function mesajGonder() {
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 }
+function mesajGonder() {
+    const msg = document.getElementById('chat-input').value.trim();
+    if(msg) {
+        const chatBox = document.getElementById('messages');
+        const time = new Date().toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
+        
+        chatBox.innerHTML += `
+            <div class="user-message-box">
+                <span class="user-name-tag">${currentUser} • ${time}</span>
+                <span class="user-text-content">${msg}</span>
+            </div>`;
+            
+        document.getElementById('chat-input').value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+}
